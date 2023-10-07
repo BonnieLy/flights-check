@@ -73,6 +73,8 @@ select {
   padding: 1em 1em;
   font-family: 'AR One Sans', sans-serif;
   -webkit-appearance: none; // to deal with iOS
+  color: black;
+  background-color: white;
 }
 
 .icon-header {

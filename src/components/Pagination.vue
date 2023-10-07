@@ -1,12 +1,12 @@
 <template>
   <div class="pagination-container">
-    <img class="navigate-button"
-         src="@assets/first_page.svg"
+    <img class="navigate-button first_page"
+         src="@assets/last_page.svg"
          :class="{ 'disabled': page === 1 }"
          @click="updatePage(1)" />
 
-    <img class="navigate-button"
-         src="@assets/previous.svg"
+    <img class="navigate-button prev_page"
+         src="@assets/next.svg"
          :class="{ 'disabled': page === 1 }"
          @click="updatePage(page - 1)" />
 
@@ -84,6 +84,10 @@ function updatePage(page) {
   &.disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  &.prev_page, &.first_page {
+    transform: rotate(180deg);
   }
 }
 </style>
