@@ -96,7 +96,7 @@ select {
 }
 
 ::-webkit-scrollbar {
-  height: 5px;
+  height: 1px;
   width: 3px;
 }
 

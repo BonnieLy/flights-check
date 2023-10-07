@@ -17,7 +17,7 @@
           <option v-for="airport of airports" :key="airport.name" :value="airport.iata_code">{{ airport.name }}</option>
         </select>
 
-        <p class="show-filter-text" @click="showFilter = !showFilter">
+        <p class="show-filter-text" @click="showFilter = !showFilter" v-if="selected">
           {{ showFilter ? 'Hide' : 'Show' }} Filters
           <img class="icon-sort" src="@assets/cheveron_down.svg" :class="{ isReversed: showFilter }" />
         </p>

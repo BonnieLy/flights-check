@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination-container">
+  <div class="pagination-container" v-if="lastPage > 0">
     <img class="navigate-button first_page"
          src="@assets/last_page.svg"
          :class="{ 'disabled': page === 1 }"

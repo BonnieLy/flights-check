@@ -6,7 +6,7 @@
       <template v-if="!details">
         <div class="loading-container">
           <p class="bold">FETCHING THE FLIGHT DATA... PLEASE WAIT...</p>
-          <img src="@assets/loading.gif"/>
+          <img src="@assets/loading.gif" />
         </div>
       </template>
 
@@ -17,104 +17,104 @@
           <div>{{ details.status }}</div>
         </div>
 
-        <table class="flight-information-container" width="100%">
-          <thead>
-            <th width="40%"><img class="icon-header" src="@assets/departure.svg" /></th>
-            <th><img class="icon-header" src="@assets/arrow_right.svg" /></th>
-            <th width="40%"><img class="icon-header" src="@assets/arrival.svg" /></th>
-          </thead>
+        <div class="flight-information-container">
+          <table class="flight-information-table" width="100%">
+            <thead>
+              <th width="40%"><img class="icon-header" src="@assets/departure.svg" /></th>
+              <th><img class="icon-header" src="@assets/arrow_right.svg" /></th>
+              <th width="40%"><img class="icon-header" src="@assets/arrival.svg" /></th>
+            </thead>
 
-          <tbody>
-            <tr>
-              <td class="bold">{{ convertDate(details.dep_time) }}</td>
-              <td>{{ details.duration_dhm }}</td>
-              <td class="bold">{{ convertDate(details.arr_time) }}</td>
-            </tr>
-
-            <tr>
-              <td>({{ details.dep_city.name }}, {{ details.dep_country.name }})</td>
-              <td></td>
-              <td>({{ details.arr_city.name }}, {{ details.arr_country.name }})</td>
-            </tr>
-
-            <tr>
-              <td class="bold">{{ details.dep_name }} </td>
-              <td></td>
-              <td class="bold">{{ details.arr_name }}</td>
-            </tr>
-
-            <tr>
-              <td colspan="3">
-                <hr>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="bold">Actual departure time</td>
-              <td></td>
-              <td class="bold">Actual arrival time</td>
-            </tr>
-
-            <tr>
-              <td :class="{ 'is-empty': !details.dep_actual }">
-                {{ displayText('dep_actual', 'date') }}
-              </td>
-              <td></td>
-              <td :class="{ 'is-empty': !details.arr_actual }">
-                {{ displayText('arr_actual', 'date') }}
-              </td>
-            </tr>
-
-            <tr>
-              <td class="bold">Terminal</td>
-              <td></td>
-              <td class="bold">Terminal</td>
-            </tr>
-
-            <tr>
-              <td :class="{ 'is-empty': !details.dep_terminal }">{{ displayText('dep_terminal') }}</td>
-              <td></td>
-              <td :class="{ 'is-empty': !details.arr_terminal }">{{ displayText('arr_terminal') }}</td>
-            </tr>
-
-            <tr>
-              <td class="bold">Gate</td>
-              <td></td>
-              <td class="bold">Gate</td>
-            </tr>
-
-            <tr>
-              <td :class="{ 'is-empty': !details.dep_gate }">{{ displayText('dep_gate') }}</td>
-              <td></td>
-              <td :class="{ 'is-empty': !details.arr_gate }">{{ displayText('arr_gate') }}</td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="bold">Baggage</td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td :class="{ 'is-empty': !details.arr_baggage }">{{ displayText('arr_baggage') }}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h1>Other information</h1>
-
-        <table class="other-information-container">
-          <template v-for="detail of data" class="detail-item">
-            <template v-if="details[detail.field]">
+            <tbody>
               <tr>
-                <td>{{ detail.title }}</td>
-                <td>{{ details[detail.field] }}</td>
+                <td class="bold">{{ convertDate(details.dep_time) }}</td>
+                <td>{{ details.duration_dhm }}</td>
+                <td class="bold">{{ convertDate(details.arr_time) }}</td>
               </tr>
-            </template>
+
+              <tr>
+                <td>({{ details.dep_city.name }}, {{ details.dep_country.name }})</td>
+                <td></td>
+                <td>({{ details.arr_city.name }}, {{ details.arr_country.name }})</td>
+              </tr>
+
+              <tr>
+                <td class="bold">{{ details.dep_name }} </td>
+                <td></td>
+                <td class="bold">{{ details.arr_name }}</td>
+              </tr>
+
+              <tr>
+                <td colspan="3">
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="bold">Actual departure time</td>
+                <td></td>
+                <td class="bold">Actual arrival time</td>
+              </tr>
+
+              <tr>
+                <td :class="{ 'is-empty': !details.dep_actual }">
+                  {{ displayText('dep_actual', 'date') }}
+                </td>
+                <td></td>
+                <td :class="{ 'is-empty': !details.arr_actual }">
+                  {{ displayText('arr_actual', 'date') }}
+                </td>
+              </tr>
+
+              <tr>
+                <td class="bold">Terminal</td>
+                <td></td>
+                <td class="bold">Terminal</td>
+              </tr>
+
+              <tr>
+                <td :class="{ 'is-empty': !details.dep_terminal }">{{ displayText('dep_terminal') }}</td>
+                <td></td>
+                <td :class="{ 'is-empty': !details.arr_terminal }">{{ displayText('arr_terminal') }}</td>
+              </tr>
+
+              <tr>
+                <td class="bold">Gate</td>
+                <td></td>
+                <td class="bold">Gate</td>
+              </tr>
+
+              <tr>
+                <td :class="{ 'is-empty': !details.dep_gate }">{{ displayText('dep_gate') }}</td>
+                <td></td>
+                <td :class="{ 'is-empty': !details.arr_gate }">{{ displayText('arr_gate') }}</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="bold">Baggage</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td :class="{ 'is-empty': !details.arr_baggage }">{{ displayText('arr_baggage') }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="other-information-container">
+          <h1>Other information</h1>
+
+          <template v-for="detail of data" class="detail-item">
+            <div class="other-information-item" v-if="details[detail.field]">
+              <p class="bold other-information-title">{{ detail.title }}</p>
+              <p>{{ details[detail.field] }}</p>
+            </div>
           </template>
-        </table>
+        </div>
       </template>
     </div>
   </div>
@@ -246,18 +246,7 @@ defineExpose({
     max-height: calc(100% - 12em); // 10em margin + 2em padding
 
     @include breakpoint-tablet {
-      width: 80%;
-    }
-
-    >.button-close-container {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-
-      >img {
-        width: 2.5em;
-        cursor: pointer;
-      }
+      width: calc(90% - 4em); // 4em padding
     }
   }
 }
@@ -281,17 +270,37 @@ defineExpose({
   align-items: center;
 }
 
-.other-information-container {
-  border-collapse: collapse;
-  width: 100%;
+.flight-status-container {
+  margin: 1em 0;
+}
 
-  td {
-    padding: 0.5em 1em;
-    text-align: left;
+.flight-information-container {
+  overflow: auto;
+
+  .flight-information-table {
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.other-information-item {
+  display: flex;
+
+  @include breakpoint-tablet {
+    flex-direction: column;
   }
 
-  tr:hover {
-    background-color: $color-light;
+  >.other-information-title {
+    width: 50%;
+
+    @include breakpoint-tablet {
+      width: unset;
+    }
+  }
+
+  >p {
+    margin: 0 0 1em 0;
   }
 }
 
@@ -302,16 +311,6 @@ defineExpose({
   >p {
     margin: 0;
   }
-}
-
-.flight-information-container {
-  td {
-    text-align: center;
-  }
-}
-
-.flight-status-container {
-  margin: 1em 0;
 }
 
 .is-empty {
