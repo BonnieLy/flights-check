@@ -16,11 +16,11 @@
           </th>
         </thead>
 
-        <tr v-if="!Array.isArray(flights.departure) || flights.departure.length === 0">
-          <td colspan="5">No data.</td>
-        </tr>
+        <tbody v-if="!Array.isArray(flights.arrival) || flights.arrival.length === 0">
+          <tr><td colspan="5">No data.</td></tr>
+        </tbody>
 
-        <tbody v-if="flights.arrival">
+        <tbody v-else>
           <tr v-for="arrival of flights.arrival" @click="$refs.flightDetailsModal.open(arrival)">
             <td>{{ arrival.airline_iata ?? arrival.airline_icao }} {{ arrival.flight_number }}</td>
             <td>{{ convertDate(arrival.dep_time) }}</td>

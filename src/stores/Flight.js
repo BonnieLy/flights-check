@@ -41,7 +41,7 @@ export const headers = ref({
     'sortBy': 'arr_time',
     'sortOrder': true,
   }, {
-    'title': 'Departure',
+    'title': 'Destination',
     'sortBy': 'arr_iata',
     'sortOrder': true,
   }, {
@@ -173,7 +173,6 @@ export function filterFlights(type) {
   filteredFlights.value[type] = allFlights.value[type].filter((flight) =>
     Object.entries(filters.value).every(([field, filter]) => {
       if (!filter.query) return true;
-      if (!flight.hasOwnProperty(field)) return true;
       if (!flight[field]) return false;
 
       return (flight[field].toLowerCase()).includes(filter.query.toLowerCase());
