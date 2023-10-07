@@ -1,0 +1,72 @@
+@import "@/styles/_variables";
+
+$statuses: (
+  'scheduled': goldenrod,
+  'cancelled': lightcoral,
+  'active': mediumseagreen,
+  'en-route': mediumseagreen,
+  'landed': cornflowerblue,
+);
+
+@each $status, $color in $statuses {
+  .status-#{$status} {
+    >div {
+      background-color: $color;
+      padding: 0.25em 0.5em;
+      border-radius: 10em;
+      text-transform: uppercase;
+      color: white;
+      text-align: center;
+    }
+  }
+}
+
+@mixin breakpoint-tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-laptop {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin flights-table {
+  margin: 2em 0;
+
+  >.flights-list {
+    width: 60em;
+    text-align: left;
+    border-collapse: collapse;
+
+    >thead {
+      background-color: $color-dark;
+      color: white;
+    }
+
+    .col-status {
+      min-width: 7em;
+    }
+
+    th,
+    td {
+      padding: 0.5em 1em;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    tr:nth-child(even) {
+      background-color: $color-light;
+    }
+  }
+}
+
+@mixin flights-pagination {
+  .flights-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+  }
+}
