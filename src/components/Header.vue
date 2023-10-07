@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <h1>FLIGHTS SEARCH ENGINE</h1>
+    <h1>Flights Search Engine</h1>
   </div>
 </template>
 

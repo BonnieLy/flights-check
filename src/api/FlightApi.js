@@ -55,25 +55,6 @@ export default class FlightApi extends BaseApi {
 
   /**
    * 
-   * @param {string} iata_code 
-   * @param {string} icao_code 
-   * @returns {Promise<*>}
-   */
-  static getAirline(iata_code, icao_code) {
-    return this.get('/airlines', {
-      key: 'airlines',
-      code: iata_code ?? icao_code,
-    }, {
-      params: {
-        iata_code,
-        icao_code,
-        _fields: 'name,country_code',
-      }
-    });
-  }
-
-  /**
-   * 
    * @param {string} city_code 
    * @returns {Promise<*>}
    */

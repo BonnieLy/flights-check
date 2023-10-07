@@ -74,8 +74,8 @@ p {
     >input {
       width: calc(100% - 2em); // 2em for padding left and right
       outline: none;
-      padding: 0.5em 1em;
-      border-radius: 5px;
+      padding: 1em;
+      border-radius: 3px;
       border: 1px solid black;
     }
 
@@ -83,7 +83,7 @@ p {
       width: 1em;
       position: absolute;
       top: calc((100% - 1em) / 2); // calc the middle position, 1em for padding top and bottom
-      right: 1em;
+      right: 0.5em;
       cursor: pointer;
     }
   }
@@ -99,7 +99,7 @@ p {
       width: 1em;
       position: absolute;
       top: calc((100% - 1em) / 2); // calc the middle position, 1em for padding top and bottom
-      right: 1em;
+      right: 0.5em;
       cursor: pointer;
     }
   }

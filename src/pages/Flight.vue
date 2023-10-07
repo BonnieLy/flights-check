@@ -8,12 +8,12 @@
         </h2>
 
         <p class="bold">
-          Please select an airport first to continue
+          Please select an Australian major airport first to continue
           <span class="red">*</span>
         </p>
 
         <select v-model="selected">
-          <option disabled value="">Please select one</option>
+          <option disabled value="null">Please select one</option>
           <option v-for="airport of airports" :key="airport.name" :value="airport.iata_code">{{ airport.name }}</option>
         </select>
 

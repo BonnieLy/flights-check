@@ -23,8 +23,8 @@
         <tbody v-if="flights.departure">
           <tr v-for="departure of flights.departure" @click="$refs.flightDetailsModal.open(departure)">
             <td>{{ departure.airline_iata ?? departure.airline_icao }} {{ departure.flight_number }}</td>
-            <td>{{ convertTime(departure.dep_time) }}</td>
-            <td>{{ convertTime(departure.arr_time) }}</td>
+            <td>{{ convertDate(departure.dep_time) }}</td>
+            <td>{{ convertDate(departure.arr_time) }}</td>
             <td>{{ departure.arr_iata }}</td>
             <td class="col-status" :class="'status-' + departure.status"><div>{{ departure.status }}</div></td>
           </tr>
@@ -44,7 +44,7 @@
 import FlightDetailsModal from '@/modals/FlightDetailsModal';
 import Pagination from '@/components/Pagination';
 import {
-  convertTime, 
+  convertDate, 
   flights,
   page,
   lastPage,

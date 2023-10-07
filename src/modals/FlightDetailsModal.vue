@@ -1,9 +1,7 @@
 <template>
   <div class="flight-details-modal-container" v-if="isOpen" @click.self="close">
     <div class="modal-content">
-      <div class="button-close-container">
-        <img src="@assets/cross_circle.svg" @click="close" />
-      </div>
+      <img class="close-button" src="@assets/cross_circle.svg" @click="close" />
 
       <template v-if="!details">
         <div class="loading-container">
@@ -13,7 +11,7 @@
       </template>
 
       <template v-else>
-        <h2>Flight information</h2>
+        <h1 class="flight-information-text">Flight information</h1>
 
         <div class="flight-status-container" :class="'status-' + details.status">
           <div>{{ details.status }}</div>
@@ -38,28 +36,11 @@
               <td></td>
               <td>({{ details.arr_city.name }}, {{ details.arr_country.name }})</td>
             </tr>
-            
 
             <tr>
               <td class="bold">{{ details.dep_name }} </td>
               <td></td>
               <td class="bold">{{ details.arr_name }}</td>
-            </tr>
-            
-            <tr>
-              <td class="bold" colspan="3">Airline</td>
-            </tr>
-
-            <tr>
-              <td colspan="3">{{ details.airline?.name }}</td>
-            </tr>
-
-            <tr>
-              <td class="bold" colspan="3">Flight number</td>
-            </tr>
-
-            <tr>
-              <td colspan="3">{{ details.flight_iata ?? details.flight_icao }}</td>
             </tr>
 
             <tr>
@@ -122,7 +103,7 @@
           </tbody>
         </table>
 
-        <h2>Other information</h2>
+        <h1>Other information</h1>
 
         <table class="other-information-container">
           <template v-for="detail of data" class="detail-item">
@@ -147,6 +128,15 @@ const isOpen = ref(false);
 
 // show other flight data dynamically 
 const data = ref([{
+  'title': 'Airline',
+  'field': 'airline_name',
+}, {
+  'title': 'Flight Number (IATA)',
+  'field': 'flight_iata',
+}, {
+  'title': 'Flight Number (ICAO)',
+  'field': 'flight_icao',
+}, {
   'title': 'Aircraft Registration Number',
   'field': 'reg_number',
 }, {
@@ -246,8 +236,8 @@ defineExpose({
 
   >.modal-content {
     margin: auto;
-    padding: 1em;
-    width: 45em;
+    padding: 2em;
+    width: 40em;
     background-color: white;
     border-radius: 5px;
     position: relative;
@@ -270,6 +260,19 @@ defineExpose({
       }
     }
   }
+}
+
+.close-button {
+  width: 2em;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  margin-top: 0;
+  cursor: pointer;
+}
+
+.flight-information-text {
+  margin-top: 0;
 }
 
 .loading-container {

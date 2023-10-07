@@ -33,12 +33,12 @@ export const headers = ref({
     'sortOrder': true,
   }],
   'departure': [{
-    'title': 'Arrival Time',
-    'sortBy': 'arr_time',
-    'sortOrder': true,
-  }, {
     'title': 'Departure Time',
     'sortBy': 'dep_time',
+    'sortOrder': true,
+  }, {
+    'title': 'Arrival Time',
+    'sortBy': 'arr_time',
     'sortOrder': true,
   }, {
     'title': 'Departure',
@@ -52,7 +52,7 @@ export const headers = ref({
 });
 
 export const currentSort = ref({
-  'arrival': headers.value['arrival'][0],
+  'arrival': headers.value['arrival'][1],
   'departure': headers.value['departure'][0],
 });
 
@@ -65,15 +65,6 @@ const _debouncer = ref(null);
  */
 export function convertDate(date) {
   return new Date(date).toLocaleString('en-AU');
-}
-
-/**
- * 
- * @param {string} date 
- * @returns {string}
- */
-export function convertTime(date) {
-  return new Date(date).toLocaleTimeString();
 }
 
 /**
@@ -209,8 +200,7 @@ export async function getDetails(flight_icao, flight_iata) {
   try {
     const data = await FlightApi.getDetails(flight_icao, flight_iata);
 
-    const [airline, depCity, arrCity] = await Promise.all([
-      FlightApi.getAirline(data.airline_iata, data.airline_icao),
+    const [depCity, arrCity] = await Promise.all([
       FlightApi.getCity(data.dep_iata),
       FlightApi.getCity(data.arr_iata),
     ]);
@@ -220,7 +210,6 @@ export async function getDetails(flight_icao, flight_iata) {
       FlightApi.getCountry(arrCity[0].country_code),
     ]);
 
-    data['airline'] = airline[0];
     data['dep_city'] = depCity[0];
     data['arr_city'] = arrCity[0];
     data['dep_country'] = depCountry[0];
