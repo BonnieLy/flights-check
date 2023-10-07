@@ -1,20 +1,28 @@
 <template>
   <div class="pagination-container">
-    <div class="pagination-box">
-      <button :disabled="page === 1" @click="updatePage(1)">First</button>
-      <button :disabled="page === 1" @click="updatePage(page - 1)">Prev</button>
-    </div>
+    <img class="navigate-button"
+         src="@assets/first_page.svg"
+         :class="{ 'disabled': page === 1 }"
+         @click="updatePage(1)" />
 
-    <div class="pagination-box">
-      <button :class="{ isActive: p + i === page }" v-for="(p, i) in pages" @click="updatePage(p + i)">
-        {{ p + i }}
-      </button>
-    </div>
+    <img class="navigate-button"
+         src="@assets/previous.svg"
+         :class="{ 'disabled': page === 1 }"
+         @click="updatePage(page - 1)" />
 
-    <div class="pagination-box">
-      <button :disabled="page === lastPage" @click="updatePage(page + 1)">Next</button>
-      <button :disabled="page === lastPage" @click="updatePage(lastPage)">Last</button>
-    </div>
+    <button :class="{ isActive: p + i === page }" v-for="(p, i) in pages" @click="updatePage(p + i)">
+      {{ p + i }}
+    </button>
+
+    <img class="navigate-button"
+         src="@assets/next.svg"
+         :class="{ 'disabled': page === lastPage }"
+         @click="updatePage(page + 1)" />
+
+    <img class="navigate-button"
+         src="@assets/last_page.svg"
+         :class="{ 'disabled': page === lastPage }"
+         @click="updatePage(lastPage)" />
   </div>
 </template>
 
@@ -64,25 +72,18 @@ function updatePage(page) {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/_mixins';
-
 .pagination-container {
   display: flex;
   gap: 1em;
-
-  @include breakpoint-tablet {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5em;
-  }
 }
 
-.pagination-box {
-  display: flex;
-  gap: 1em;
+.navigate-button {
+  width: 1em;
+  cursor: pointer;
 
-  @include breakpoint-tablet {
-    gap: 0.5em;
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 </style>

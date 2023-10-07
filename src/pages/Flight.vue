@@ -70,8 +70,8 @@ function applyFilter(filter, value) {
   }
 
   filter.query = value;
-  filterFlights('departure', filters.value);
-  filterFlights('arrival', filters.value);
+  filterFlights('departure');
+  filterFlights('arrival');
 }
 </script>
 

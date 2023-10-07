@@ -8,11 +8,12 @@ export const isLoading = ref(false);
 export const airports = ref(null);
 export const selected = ref(null);
 export const details = ref(null);
-export const allFlights = ref({ 'arrival': null, 'departure': null }); // store all the flights
-export const filteredFlights = ref({ 'arrival': null, 'departure': null }); // store the filtered flights
-export const flights = ref({ 'arrival': null, 'departure': null }); // store the paginated flights
-export const page = ref({ 'arrival': 1, 'departure': 1 });
-export const lastPage = ref({ 'arrival': 0, 'departure': 0 });
+export const allFlights = ref(null); // store all the flights
+export const filteredFlights = ref(null); // store the filtered flights
+export const flights = ref(null); // store the paginated flights
+export const page = ref(null);
+export const lastPage = ref(null);
+export const filters = ref(null);
 export const headers = ref({
   'arrival': [{
     'title': 'Departure Time',
@@ -32,12 +33,12 @@ export const headers = ref({
     'sortOrder': true,
   }],
   'departure': [{
-    'title': 'Departure Time',
-    'sortBy': 'dep_time',
-    'sortOrder': true,
-  }, {
     'title': 'Arrival Time',
     'sortBy': 'arr_time',
+    'sortOrder': true,
+  }, {
+    'title': 'Departure Time',
+    'sortBy': 'dep_time',
     'sortOrder': true,
   }, {
     'title': 'Departure',
@@ -51,43 +52,8 @@ export const headers = ref({
 });
 
 export const currentSort = ref({
-  'arrival': headers.value['arrival'],
-  'departure': headers.value['departure'],
-});
-
-export const filters = ref({
-  'airline_iata': {
-    label: 'By Airline (2-character code)',
-    placeholder: 'Example: BA',
-    query: '',
-  },
-  'airline_icao': {
-    label: 'By Airline (3-character code)',
-    placeholder: 'Example: BAW',
-    query: '',
-  },
-  'flight_number': {
-    label: 'By Flight Number',
-    placeholder: 'Example: 1234',
-    query: '',
-  },
-  'arr_iata': {
-    label: 'By Destination (For Departures only)',
-    placeholder: 'Example: SYD',
-    query: '',
-  },
-  'dep_iata': {
-    label: 'By Origin (For Arrivals only)',
-    placeholder: 'Example: MEL',
-    query: '',
-  },
-  'status': {
-    label: 'By Status',
-    placeholder: 'Example: active, landed, scheduled, canceled',
-    query: '',
-    type: 'select',
-    options: ['Active', 'Landed', 'Scheduled', 'Canceled'],
-  }
+  'arrival': headers.value['arrival'][0],
+  'departure': headers.value['departure'][0],
 });
 
 const _debouncer = ref(null);
@@ -141,6 +107,7 @@ export function debouncer(cb, timeout = 300) {
 
 export async function getAirports() {
   try {
+    reset();
     isLoading.value = true;
 
     if (localStorage.getItem('airports')) {
@@ -159,6 +126,7 @@ export async function getAirports() {
 
 export async function getAll() {
   try {
+    reset();
     isLoading.value = true;
 
     const [departures, arrivals] = await Promise.all([
@@ -181,21 +149,6 @@ export async function getAll() {
   } catch (error) {
     errorMessage('get flights', error);
   }
-}
-
-/**
- * 
- * @param {Array} flights 
- * @param {string} filterBy 
- * @returns {Array}
- */
-function getTodayFlights(flights, filterBy) {
-  const endOfDate = new Date();
-  endOfDate.setHours(23);
-  endOfDate.setMinutes(59);
-  endOfDate.setSeconds(59);
-
-  return flights.filter(flight => new Date(flight[filterBy]) <= endOfDate);
 }
 
 /**
@@ -224,11 +177,10 @@ export function getByPage(type, p = 1) {
 /**
  * 
  * @param {'departure | arrival'} type 
- * @param {Object} filters 
  */
-export function filterFlights(type, filters) {
+export function filterFlights(type) {
   filteredFlights.value[type] = allFlights.value[type].filter((flight) =>
-    Object.entries(filters).every(([field, filter]) => {
+    Object.entries(filters.value).every(([field, filter]) => {
       if (!filter.query) return true;
       if (!flight.hasOwnProperty(field)) return true;
       if (!flight[field]) return false;
@@ -293,6 +245,63 @@ export function errorMessage(message, error = undefined) {
     error?.message ?? `Sorry, we are unable to ${message}. Please try again!`,
     'error'
   );
+}
+
+/**
+ * 
+ * @param {Array} flights 
+ * @param {string} filterBy 
+ * @returns {Array}
+ */
+function getTodayFlights(flights, filterBy) {
+  const endOfDate = new Date();
+  endOfDate.setHours(23);
+  endOfDate.setMinutes(59);
+  endOfDate.setSeconds(59);
+
+  return flights.filter(flight => new Date(flight[filterBy]) <= endOfDate);
+}
+
+function reset() {
+  allFlights.value = { 'arrival': null, 'departure': null };
+  filteredFlights.value = { 'arrival': null, 'departure': null };
+  flights.value = { 'arrival': null, 'departure': null };
+  page.value = { 'arrival': 1, 'departure': 1 };
+  lastPage.value = { 'arrival': 0, 'departure': 0 };
+  filters.value = {
+    'airline_iata': {
+      label: 'By Airline (2-character code)',
+      placeholder: 'Example: BA',
+      query: '',
+    },
+    'airline_icao': {
+      label: 'By Airline (3-character code)',
+      placeholder: 'Example: BAW',
+      query: '',
+    },
+    'flight_number': {
+      label: 'By Flight Number',
+      placeholder: 'Example: 1234',
+      query: '',
+    },
+    'arr_iata': {
+      label: 'By Destination (For Departures only)',
+      placeholder: 'Example: SYD',
+      query: '',
+    },
+    'dep_iata': {
+      label: 'By Origin (For Arrivals only)',
+      placeholder: 'Example: MEL',
+      query: '',
+    },
+    'status': {
+      label: 'By Status',
+      placeholder: 'Example: active, landed, scheduled, canceled',
+      query: '',
+      type: 'select',
+      options: ['Active', 'Landed', 'Scheduled', 'Canceled'],
+    }
+  };
 }
 
 watch(selected, async () => {
