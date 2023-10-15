@@ -20,9 +20,9 @@
         <div class="flight-information-container">
           <table class="flight-information-table" width="100%">
             <thead>
-              <th width="40%"><img class="icon-header" src="@assets/departure.svg" /></th>
+              <th width="40%"><img class="icon-header" src="/departure.svg" /></th>
               <th><img class="icon-header" src="@assets/arrow_right.svg" /></th>
-              <th width="40%"><img class="icon-header" src="@assets/arrival.svg" /></th>
+              <th width="40%"><img class="icon-header" src="/arrival.svg" /></th>
             </thead>
 
             <tbody>

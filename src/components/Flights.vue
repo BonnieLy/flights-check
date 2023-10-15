@@ -1,8 +1,8 @@
 <template>
-  <div class="departure-container">
+  <div class="flight-container">
     <h2>
-      <img class="icon-header" src="@assets/departure.svg" />
-      Departures
+      <img class="icon-header" :src="'/' + icon" />
+      {{ header }}
     </h2>
  
     <div class="flights-list-container">
@@ -10,30 +10,30 @@
         <thead>
           <th>Flight</th>
 
-          <th v-for="header of headers.departure" :key="header.title" @click="sort(header)">
+          <th v-for="header of headers[type]" :key="header.title" @click="sort(header)">
             {{ header.title }}
             <img class="icon-sort" src="@assets/cheveron_down.svg" :class="{ isReversed: header.sortOrder }" />
           </th>
         </thead>
 
-        <tbody v-if="!Array.isArray(flights.departure) || flights.departure.length === 0">
+        <tbody v-if="!Array.isArray(flights[type]) || flights[type].length === 0">
           <tr><td colspan="5">No data.</td></tr>
         </tbody>
 
         <tbody v-else>
-          <tr v-for="departure of flights.departure" @click="$refs.flightDetailsModal.open(departure)">
-            <td>{{ departure.airline_iata ?? departure.airline_icao }} {{ departure.flight_number }}</td>
-            <td>{{ convertDate(departure.dep_time) }}</td>
-            <td>{{ convertDate(departure.arr_time) }}</td>
-            <td>{{ departure.arr_iata }}</td>
-            <td class="col-status" :class="'status-' + departure.status"><div>{{ departure.status }}</div></td>
+          <tr v-for="flight of flights[type]" @click="$refs.flightDetailsModal.open(flight)">
+            <td>{{ flight.airline_iata ?? flight.airline_icao }} {{ flight.flight_number }}</td>
+            <td>{{ convertDate(flight.dep_time) }}</td>
+            <td>{{ convertDate(flight.arr_time) }}</td>
+            <td>{{ type === 'departure' ? flight.arr_iata : flight.dep_iata }}</td>
+            <td class="col-status" :class="'status-' + flight.status"><div>{{ flight.status }}</div></td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="flights-pagination">
-      <Pagination :lastPage="lastPage.departure" :page="page.departure" @update:page="(p) => getByPage('departure', p)" />
+      <Pagination :lastPage="lastPage[type]" :page="page[type]" @update:page="(p) => getByPage(type, p)" />
     </div>
   </div>
 
@@ -54,20 +54,35 @@ import {
   getByPage,
 } from '@stores/Flight';
 
+const props = defineProps({
+  'header': {
+    type: String,
+    required: true,
+  },
+  'type': {
+    type: String,
+    required: true,
+  },
+  'icon': {
+    type: String,
+    required: true,
+  },
+});
+
 function sort(header) {
   // revert the order
   header.sortOrder = !header.sortOrder;
   // set the current sort
-  currentSort.value.departure = header;
+  currentSort.value[props.type] = header;
   // sort the flights
-  sortBy('departure', header.sortBy, header.sortOrder);
+  sortBy(props.type, header.sortBy, header.sortOrder);
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@/styles/_mixins";
 
-.departure-container {
+.flight-container {
   margin-top: 5em;
 
   > .flights-list-container {

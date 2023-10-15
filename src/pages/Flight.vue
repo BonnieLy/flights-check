@@ -36,8 +36,8 @@
         </transition>
       </div>
 
-      <Departure />
-      <Arrival />
+      <Flights header="Departures" type="departure" icon="departure.svg"/>
+      <Flights header="Arrivals" type="arrival" icon="arrival.svg"/>
     </div>
   </div>
 </template>
@@ -46,8 +46,7 @@
 import Swal from 'sweetalert2';
 import { onBeforeMount, ref } from 'vue';
 import Input from '@/components/Input';
-import Arrival from '@/components/Arrival';
-import Departure from '@/components/Departure';
+import Flights from '@/components/Flights';
 import { airports, selected, filters, getAirports, filterFlights } from '@stores/Flight';
 
 const showFilter = ref(false);
